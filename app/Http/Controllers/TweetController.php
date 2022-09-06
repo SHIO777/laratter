@@ -17,8 +17,11 @@ class TweetController extends Controller
     public function index()
     {
         // 🔽 編集
-        $tweets = [];
+        // $tweets = [];
+        // DBからTweetを取得する
+        $tweets = Tweet::getAllOrderByUpdated_at();
         // compact('変数名')
+        // ddd($tweets);
         return view('tweet.index', compact('tweets'));
     }
 
@@ -41,8 +44,26 @@ class TweetController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // バリデーション
+        $validator = Validator::make($request->all(), [
+            'tweet' => 'required | max:191',
+            'description' => 'required',
+        ]);
+        // バリデーション:エラー
+        if ($validator->fails()) {
+            return redirect()
+                ->route('tweet.create')
+                ->withInput()
+                ->withErrors($validator);
+        }
+        // create()は最初から用意されている関数
+        // 戻り値は挿入されたレコードの情報
+        $result = Tweet::create($request->all());
+        // ddd($result);        for debug
+        // ルーティング「todo.index」にリクエスト送信（一覧ページに移動）
+        return redirect()->route('tweet.index');
     }
+
 
     /**
      * Display the specified resource.
