@@ -16,8 +16,10 @@ class TweetController extends Controller
      */
     public function index()
     {
-        // 🔽 追加
-        return view('tweet.index');
+        // 🔽 編集
+        $tweets = [];
+        // compact('変数名')
+        return view('tweet.index', compact('tweets'));
     }
 
     /**
