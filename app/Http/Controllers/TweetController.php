@@ -57,6 +57,7 @@ class TweetController extends Controller
                 ->withErrors($validator);
         }
         // create()は最初から用意されている関数
+        // Databaseにデータを保存
         // 戻り値は挿入されたレコードの情報
         $result = Tweet::create($request->all());
         // ddd($result);        for debug
@@ -73,7 +74,11 @@ class TweetController extends Controller
      */
     public function show($id)
     {
-        //
+        $tweet = Tweet::find($id);
+        ### debug
+        // ddd($tweet->all()); # 全て表示
+        return view('tweet.show', compact('tweet'));
+        // ddd($id);
     }
 
     /**
@@ -108,5 +113,7 @@ class TweetController extends Controller
     public function destroy($id)
     {
         //
+        $result = Tweet::find($id)->delete();
+        return redirect()->route('tweet.index');
     }
 }
