@@ -116,6 +116,7 @@ class TweetController extends Controller
         }
         //データ更新処理
         $result = Tweet::find($id)->update($request->all());
+        // ddd($result);
         return redirect()->route('tweet.index');
     }
 
