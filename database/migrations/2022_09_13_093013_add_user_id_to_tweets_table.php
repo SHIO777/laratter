@@ -29,8 +29,13 @@ return new class extends Migration
     {
         Schema::table('tweets', function (Blueprint $table) {
             // 🔽 1行追加
-            $table->dropForeign(['user_id']);
-
+            // ./vendor/bin/sail php artisan:rollback
+            // $table->dropForeign(['user_id']); <- wrong code!
+            // https://readouble.com/laravel/9.x/ja/migrations.html
+            // https://qiita.com/igayamaguchi/items/897097ff430588f43a30
+            // https://laravel.com/docs/9.x/database
+            $table->dropForeign('tweets_user_id_foreign');
+            $table->dropColumn('user_id');
         });
     }
 };
