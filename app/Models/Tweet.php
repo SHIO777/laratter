@@ -22,6 +22,13 @@ class Tweet extends Model
   {
     return self::orderBy('updated_at', 'desc')->get();
   }
+
+  // 🔽 追加
+  public function user()
+  {
+    return $this->belongsTo(User::class);
+  }
+
 }
 
 
