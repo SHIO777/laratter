@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 use Validator;
 use App\Models\Tweet;
 
+// 🔽 追加
+use Auth;
+
 class TweetController extends Controller
 {
     /**
@@ -59,7 +62,11 @@ class TweetController extends Controller
         // create()は最初から用意されている関数
         // Databaseにデータを保存
         // 戻り値は挿入されたレコードの情報
+        // 🔽 編集 フォームから送信されてきたデータとユーザIDをマージし，DBにinsertする
+        
+        $data = $request->merge(['user_id' => Auth::user()->id])->all();
         $result = Tweet::create($request->all());
+        // ddd(Auth::user());   for debug
         // ddd($result);        for debug
         // ルーティング「todo.index」にリクエスト送信（一覧ページに移動）
         return redirect()->route('tweet.index');
