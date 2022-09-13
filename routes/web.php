@@ -15,7 +15,14 @@ use App\Http\Controllers\TweetController;
 |
 */
 
-Route::resource('tweet', TweetController::class);
+// 🔽 ここを編集
+Route::group(['middleware' => 'auth'], function () {
+    // 🔽 追加
+    // Route::get の次の行に Route::resourceを入れること．でないと以下のエラーが発生する．
+    // Attempt to read property "tweet" on null
+    Route::get('/tweet/mypage', [TweetController::class, 'mydata'])->name('tweet.mypage');
+    Route::resource('tweet', TweetController::class);
+});
 
 Route::get('/', function () {
     return view('welcome');
