@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 // 🔽 追加
 use App\Http\Controllers\TweetController;
+// 🔽 追加
+use App\Http\Controllers\FavoriteController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,6 +19,11 @@ use App\Http\Controllers\TweetController;
 
 // 🔽 ここを編集
 Route::group(['middleware' => 'auth'], function () {
+    // 🔽 追加
+    Route::post('tweet/{tweet}/favorites', [FavoriteController::class, 'store'])->name('favorites');
+
+    // 🔽 追加
+    Route::post('tweet/{tweet}/unfavorites', [FavoriteController::class, 'destroy'])->name('unfavorites');
     // 🔽 追加
     // Route::get の次の行に Route::resourceを入れること．でないと以下のエラーが発生する．
     // Attempt to read property "tweet" on null
