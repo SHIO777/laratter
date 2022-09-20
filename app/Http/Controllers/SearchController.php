@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Tweet;
+use App\Models\User;
 
 class SearchController extends Controller
 {
@@ -11,9 +13,21 @@ class SearchController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $keyword = trim($request->keyword);     // 両端の空白文字を削除
+        $users = User::where('name', 'like', "%{$keyword}%")->pluck('id')->all();
+        $tweets = Tweet::query()
+            // ->where('tweet', 'like', "%{$keyword}%")
+            // ->where('description', 'like', "%{$keyword}%")
+            // ->whereIn('user_id', $users)
+
+            ->where('tweet', 'like', "%{$keyword}%")        // キーワードの前後の文字は無視する正規表現->%で囲む
+            ->orWhere('description', 'like', "%{$keyword}%")
+            ->orWhereIn('user_id', $users)
+            ->get();
+            // ddd($tweets);
+        return view('tweet.index', compact('tweets'));
     }
 
     /**
@@ -23,7 +37,7 @@ class SearchController extends Controller
      */
     public function create()
     {
-        //
+        return view('search.input');
     }
 
     /**

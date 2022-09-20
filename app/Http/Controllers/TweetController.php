@@ -159,6 +159,7 @@ class TweetController extends Controller
     {
         // フォローしているユーザーを取得する
         $followings = User::find(Auth::id())->followings->pluck('id')->all();
+        // ddd($followings);
         // 自分とフォローしている人が投稿したツイートを取得する
         $tweets = Tweet::query()
             ->where('user_id', Auth::id())

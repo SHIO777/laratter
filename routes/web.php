@@ -19,7 +19,8 @@ use App\Http\Controllers\SearchController;
 
 // 🔽 ここを編集
 Route::group(['middleware' => 'auth'], function () {
-    // Route::get('/tweet/search/input', ) 
+    Route::get('/tweet/search/input', [SearchController::class, 'create'])->name('search.input');
+    Route::get('/tweet/search/result', [SearchController::class, 'index'])->name('search.result');
 
     Route::get('/tweet/timeline', [TweetController::class, 'timeline'])->name('tweet.timeline');
     Route::get('user/{user}', [FollowController::class, 'show'])->name('follow.show');
