@@ -1,11 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\User;    // important
-use Auth;               // important
+
 use Illuminate\Http\Request;
 
-class FollowController extends Controller
+class SearchController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -33,12 +32,9 @@ class FollowController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-
-    // ここでフォローする
-    public function store(User $user)
+    public function store(Request $request)
     {
-    Auth::user()->followings()->attach($user->id);
-    return redirect()->back();
+        //
     }
 
     /**
@@ -49,14 +45,7 @@ class FollowController extends Controller
      */
     public function show($id)
     {
-        // ターゲットユーザのデータ
-        $user = User::find($id);
-        // ターゲットユーザのフォロワー一覧
-        $followers = $user->followers;
-        // ddd($followers);
-        // // ターゲットユーザのフォローしている人一覧
-        $followings  = $user->followings;
-        return view('user.show', compact('user', 'followers', 'followings'));
+        //
     }
 
     /**
@@ -88,10 +77,8 @@ class FollowController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    // フォローを解除
-    public function destroy(User $user)
+    public function destroy($id)
     {
-    Auth::user()->followings()->detach($user->id);
-    return redirect()->back();
+        //
     }
 }
