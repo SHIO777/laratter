@@ -60,6 +60,16 @@
                     <h3 class="text-left font-bold text-lg text-grey-dark">{{$tweet->tweet}}</h3>
                   </a>
                   <div class="flex">
+
+                    <form action="{{ route('comment.create',$tweet->id) }}" method="GET" class="text-left">
+                      @csrf
+                      <button type="submit" class="mr-2 ml-2 text-sm hover:bg-gray-200 hover:shadow-none text-white py-1 px-2 focus:outline-none focus:shadow-outline">
+                        <svg class="h-6 w-6 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="black">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                        </svg>
+                      </button>
+                    </form>
+
                   <!-- 🔽 追加 -->
                   <!-- favorite 状態で条件分岐 -->
                   @if($tweet->users()->where('user_id', Auth::id())->exists())

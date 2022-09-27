@@ -19,6 +19,9 @@ use App\Http\Controllers\SearchController;
 
 // 🔽 ここを編集
 Route::group(['middleware' => 'auth'], function () {
+    Route::get('tweet/{tweet}/comment', [CommentController::class, 'create'])->name('comment.create');
+    Route::post('tweet/comment', [CommentController::class, 'store'])->name('comment.store');
+    
     Route::get('/tweet/search/input', [SearchController::class, 'create'])->name('search.input');
     Route::get('/tweet/search/result', [SearchController::class, 'index'])->name('search.result');
 
